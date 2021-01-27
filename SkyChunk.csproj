@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+
+		<AssemblyTitle>SkyChunk</AssemblyTitle>
+		<Authors>copygirl</Authors>
+		<Version>1.0.0</Version>
+
+		<Description>Vintage Story mod which removes most chunks in the world to create a unique challenge</Description>
+		<RepositoryUrl>https://github.com/copygirl/SkyChunk</RepositoryUrl>
+
+		<TargetFramework>net452</TargetFramework>
+		<LangVersion>latest</LangVersion>
+
+	</PropertyGroup>
+	<ItemGroup>
+
+		<Reference Include="VintagestoryAPI">
+			<HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="VSSurvivalMod">
+			<HintPath>$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+		<Reference Include="harmony">
+			<HintPath>$(VINTAGE_STORY)/Lib/0Harmony.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<None Include="UNLICENSE" CopyToOutputDirectory="PreserveNewest" />
+		<None Include="modinfo.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+		<ZipDirectory DestinationFile="bin/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
+	</Target>
+</Project>

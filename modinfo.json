@@ -1,0 +1,15 @@
+{
+	"type": "code",
+	"name": "SkyChunk",
+	"modid": "skychunk",
+	"version": "1.0.0",
+	"side": "Server",
+
+	"description": "Removes most chunks in the world to create a unique challenge",
+	"website": "https://github.com/copygirl/SkyChunk",
+	"authors": [ "copygirl" ],
+
+	"dependencies": {
+		"game": "1.14.7"
+	}
+}
