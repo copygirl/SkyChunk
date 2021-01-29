@@ -45,9 +45,12 @@ namespace SkyChunk
 		static bool Prefix(ICoreServerAPI ___api, IServerChunk[] chunks, int chunkX, int chunkZ, ITreeAttribute chunkGenParams)
 		{
 			var world = ___api.WorldManager;
+
 			// Always generate the 4 spawn chunks around the default spawn position.
-			if ((chunkX / 2 == world.MapSizeX / world.ChunkSize / 4) &&
-			    (chunkZ / 2 == world.MapSizeZ / world.ChunkSize / 4))
+			var spawnChunkX = (world.MapSizeX / 2) >> 5;
+			var spawnChunkZ = (world.MapSizeZ / 2) >> 5;
+			if ((chunkX >= spawnChunkX - 1) && (chunkZ >= spawnChunkZ - 1) &&
+			    (chunkX <  spawnChunkX + 1) && (chunkZ <  spawnChunkZ + 1))
 				return true;
 
 			// Seeding the Random like this seems to generate patterns, so non-deterministic it is!
