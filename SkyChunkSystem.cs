@@ -23,18 +23,30 @@ namespace SkyChunk
 		{
 			api.Event.SaveGameLoaded += () => {
 				var config = api.WorldManager.SaveGame.WorldConfiguration;
-				// Set a flag on world creation so this mod only ever affects
-				// worlds created when the mod is present, never existing ones.
-				if (api.WorldManager.SaveGame.IsNew) config.SetBool(MOD_ID + ":enabled", true);
-				else if (!config.GetBool(MOD_ID + ":enabled")) return;
+				if (api.WorldManager.SaveGame.IsNew) {
+					Mod.Logger.Notification("Detected new save game, ENABLING SkyChunk in this world.");
+					// Set a flag on world creation so this mod only ever affects
+					// worlds created when the mod is present, never existing ones.
+					config.SetBool(MOD_ID + ":enabled", true);
+				} else {
+					var enabled = config.GetBool(MOD_ID + ":enabled");
+					Mod.Logger.Notification($"Loading existing save game. SkyChunk is {(enabled ? "EN" : "DIS")}ABLED.");
+					if (!enabled) return;
+				}
 
-				// Only apply patch when world is new or flag was set.
-				Harmony.PatchAll();
+				Mod.Logger.Notification("Now applying world generation patch...");
+				try { Harmony.PatchAll(); }
+				catch (Exception ex) { Mod.Logger.Error($"Could not apply patch:\n{ex}"); }
 			};
 		}
 
 		public override void Dispose()
-			=> Harmony.UnpatchAll(MOD_ID);
+		{
+			if (Harmony.HasAnyPatches(MOD_ID)) {
+				Mod.Logger.Notification("Undoing world generation patch...");
+				Harmony.UnpatchAll(MOD_ID);
+			}
+		}
 	}
 
 	[HarmonyPatch(typeof(GenTerra), "OnChunkColumnGen")]
