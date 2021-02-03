@@ -20,7 +20,7 @@ To install, start the game and go to the Mod Manager in the main menu. There you
 
 [Vintage Story]: https://vintagestory.at/
 [MC SkyChunk]:   https://github.com/Boundarybreaker/Skychunk
-[LemmaEOF]:      https://twitter.com/b0undarybreaker
+[LemmaEOF]:      https://twitter.com/LemmaEOF
 [Tapl Video]:    https://www.youtube.com/watch?v=nZOCHHch140
 [workaround]:    https://github.com/copygirl/SkyChunk/blob/master/SkyChunkSystem.cs#L29-L33
 [Downloads]:     https://github.com/copygirl/SkyChunk/releases
